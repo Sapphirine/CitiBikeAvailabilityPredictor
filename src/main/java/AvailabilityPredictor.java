@@ -47,14 +47,6 @@ public class AvailabilityPredictor {
           .option("dbtable", "public.stations")
           .load();
         
-        Iterator<Row> iterator2 = jdbcDF_stations.toLocalIterator();
-        while (iterator2.hasNext()) {
-            Row entry = iterator2.next();
-            System.out.println(entry);
-        }
-        
-        //jdbcDF.printSchema();
-
 
         /* (2) Obtain user input */
         
@@ -144,27 +136,6 @@ public class AvailabilityPredictor {
         System.out.println("Availability of station "+sid+" at "+shour+":"+smin+" will be:  "+prob+"\n");
         System.out.println("==============================================================================\n");
 
-
-        /* ---------------------------- Additional Functionality ---------------------------- */
-
-        /* If probability is below some threshold, suggest other nearby stations. */
-        
-        if (prob < PROB_THRES) {
-            System.out.println("\nThe availability is below our threshold of "+PROB_THRES+".");
-            System.out.print("Would you like to find a nearby station with higher availability? (y/n) ");
-            String schoice = scan.nextLine();
-
-            if (schoice.equals("y")) {
-                // (A) Sort the stations by distance from input station ID, using a lat-long compare method
-
-                // (B) Go through list in order until an entry has prob > PROB_THRES
-
-                // (C) Print to user
-
-            } else {
-                // Do nothing?
-            }
-        }
 
         // Stop Spark session
         spark.stop();
